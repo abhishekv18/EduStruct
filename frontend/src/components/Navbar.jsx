@@ -46,7 +46,7 @@ const Navbar = () => {
     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
       <div class="flex shrink-0 items-center">
         <Link to="/">
-        <h1 className="text-2xl font-bold text-white">EduStruct</h1>
+        { <h1 className="text-2xl font-bold text-white">EduStruct</h1> }
         </Link>
       </div>
       <div class="hidden sm:ml-6 sm:block">

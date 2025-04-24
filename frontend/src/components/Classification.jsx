@@ -110,7 +110,7 @@ const ClassificationForm = ({ setStatus }) => {
             <input
               type="number"
               name="totalStudents"
-              placeholder="Total Number of Students"
+              placeholder="Total Number of Students in a Class"
               className="p-3 border rounded"
               value={formData.totalStudents}
               onChange={handleChange}

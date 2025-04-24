@@ -103,13 +103,13 @@ import Footer from './Footer';
 import { FaRobot, FaChartLine, FaSchool, FaCheckCircle } from "react-icons/fa";
 
 const Home = () => {
-  useEffect(() => {
-    const scroll = new LocomotiveScroll({
-      el: document.querySelector("[data-scroll-container]"),
-      smooth: true,
-    });
-    return () => scroll.destroy();
-  }, []);
+  // useEffect(() => {
+  //   const scroll = new LocomotiveScroll({
+  //     el: document.querySelector("[data-scroll-container]"),
+  //     smooth: true,
+  //   });
+  //   return () => scroll.destroy();
+  // }, []);
 
   return (
     <div data-scroll-container>

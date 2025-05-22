@@ -3,10 +3,10 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 export const register = async(req,res)=>{
     try {
-        const{fullname,email,phoneNumber,password}=req.body;
+        const{fullname,email,phoneNumber,password,role}=req.body;
 
 
-        if (!fullname ||   !phoneNumber || !email || !password) {
+        if (!fullname ||   !phoneNumber || !email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
@@ -21,7 +21,7 @@ export const register = async(req,res)=>{
             });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({fullname,email,phoneNumber,password:hashedPassword});
+        const newUser = new User({fullname,email,phoneNumber,password:hashedPassword,role});
         await newUser.save();
         return res.status(201).json({
             message:"User registered successfully",
@@ -36,9 +36,9 @@ export const register = async(req,res)=>{
 
 export const login = async(req,res)=>{
     try {
-        const{email,password}=req.body;
+        const{email,password,role}=req.body;
         
-        if (!email || !password) {
+        if (!email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
@@ -59,6 +59,12 @@ export const login = async(req,res)=>{
                 success: false,
             })
         };
+        if (role !== user.role) {
+            return res.status(400).json({
+                message: "Account doesn't exist with current role.",
+                success: false
+            })
+        };
         const tokenData = {
             userId: user._id
         }
@@ -68,6 +74,7 @@ export const login = async(req,res)=>{
             fullname: user.fullname,
             email: user.email,
             phoneNumber: user.phoneNumber,
+            role: user.role,
         }
 
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
@@ -89,4 +96,36 @@ export const logout = async (req, res) => {
         console.log(error);
     }
 }
+
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.status(200).json({ 
+            message:"User fetched successfully",
+            success:true,
+            users
+         });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteUser = async (req, res) => {
+    try {
+       
+        await User.findByIdAndDelete( req.params.id);
+        res.status(200).json({ 
+            message:"User deleted successfully",
+            success:true
+         });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
 

@@ -84,7 +84,7 @@ const Solutions = () => {
                   <motion.button
                     onClick={() => toggleExpansion(key)}
                     whileTap={{ scale: 0.95 }}
-                    className="ml-auto text-indigo-600 focus:outline-none"
+                    className="ml-auto cursor-pointer focus:outline-none bg-gradient-to-r from-[#101c2c] to-[#1b3a5c] text-white px-4 py-2 rounded-md"
                   >
                     {expanded === key ? "Hide Solutions" : "View Solutions"}
                   </motion.button>
